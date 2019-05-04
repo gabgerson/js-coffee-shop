@@ -46,40 +46,80 @@
       </table>
 
       <h4>
-        Total: <span id="revenue"><!-- Revenue Message will show up here --></span>
+        Total: <span class = "money" id="revenue"><!-- Revenue Message will show up here --></span>
       </h4>
     </div>
   </div>
-
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
   <script>
 
     // Set these variables to their DOM elements
 
-    const coffeeImage = document.querySelector('#coffee-image');
+    const coffeeImage = $('#coffee-image');
 
-    coffeeImage.setAttribute('src', 'static/coffee_beans.jpg');
+    const espresso = $('#espresso');
+    const latte = $('#latte');
+    const hotChocolate = $('#hot-chocolate');
 
-    function makeCoffee(evt){
-        coffeeImage.setAttribute('src', 'static/coffee_mug.jpg');
+    coffeeImage.attr('src', 'static/coffee_beans.jpg');
+    const drinksOrdered = []
+
+    function revenue(drinksOrdered) {
+      const rev = $('#revenue');
+      let total = 0
+      for (drink of drinksOrdered) {
+        total = total + prices[drink];
+        console.log(total);
+      } return total
     }
 
+    function makeCoffee(drinkType){
+        coffeeImage.attr('src', 'static/coffee_mug.jpg');
+        drinksOrdered.push(drinkType);
+        let rev = revenue(drinksOrdered)
+        // console.log(rev + '!!!')
+        $('#revenue').html(rev);
+        return drinksOrdered;
+      }
     function makeMachine(evt){
-        coffeeImage.setAttribute('src', 'static/coffee_machine.jpg');
+        coffeeImage.attr('src', 'static/coffee_machine.jpg');
     }
 
 
     function makeBeans(evt){
-        coffeeImage.setAttribute('src', 'static/coffee_beans.jpg');
+        coffeeImage.attr('src', 'static/coffee_beans.jpg');
     }
 
     function changeCoffeePics(evt) {
         setTimeout(makeMachine, 0);
         setTimeout(makeCoffee, 1500);
         setTimeout(makeBeans,4000);
+
+        const drinks = makeCoffee('brew');
+        console.log('These are the drinks you have ordered ' + drinks);
     }
 
-    coffeeImage.addEventListener('click', changeCoffeePics);
 
+    // total = 0
+    // total = total + prices[drink]
+
+    coffeeImage.click(changeCoffeePics);
+
+    espresso.click(() => {
+      makeCoffee('espresso')});
+
+    latte.click(() => {
+      makeCoffee('latte')});
+
+
+    hotChocolate.click(() => {
+      makeCoffee('hot chocolate')});
+
+
+    // const revenueMessage = rev.attr('<p> TOTAL:' {revenue} );
 
     // const revenueMessage;
 
@@ -94,6 +134,8 @@
 
 
   </script>
+
+
 
 </body>
 </html>
